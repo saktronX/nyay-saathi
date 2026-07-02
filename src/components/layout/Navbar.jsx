@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Scale, Menu, X, Globe } from 'lucide-react';
+import { Scale, Menu, X, Globe, LogIn, UserPlus } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import clsx from 'clsx';
 
@@ -53,7 +53,7 @@ export default function Navbar() {
             ))}
           </nav>
 
-          {/* Right: Lang toggle + mobile menu */}
+          {/* Right: Lang toggle + auth buttons + mobile menu */}
           <div className="flex items-center gap-2">
             {/* Language Toggle */}
             <button
@@ -64,6 +64,31 @@ export default function Navbar() {
               <Globe className="w-4 h-4 text-saffron-400" />
               <span>{lang === 'en' ? 'हि' : 'EN'}</span>
             </button>
+
+            {/* Login button — desktop */}
+            <Link
+              to="/login"
+              className={clsx(
+                'hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-150',
+                isActive('/login')
+                  ? 'bg-saffron-400 text-navy-700'
+                  : 'text-gray-300 hover:text-white hover:bg-navy-600'
+              )}
+              aria-label="Login"
+            >
+              <LogIn className="w-4 h-4" />
+              {lang === 'hi' ? 'लॉगिन' : 'Login'}
+            </Link>
+
+            {/* Register button — desktop */}
+            <Link
+              to="/register"
+              className="hidden md:flex items-center gap-1.5 bg-saffron-400 hover:bg-saffron-500 text-navy-800 font-semibold px-3 py-1.5 rounded-lg text-sm transition-all duration-150 active:scale-95"
+              aria-label="Register free"
+            >
+              <UserPlus className="w-4 h-4" />
+              {lang === 'hi' ? 'रजिस्टर करें' : 'Register Free'}
+            </Link>
 
             {/* Mobile toggle */}
             <button
@@ -96,6 +121,23 @@ export default function Navbar() {
               <span className="text-xs font-hindi opacity-70">{item.labelHi}</span>
             </Link>
           ))}
+          {/* Mobile auth links */}
+          <div className="border-t border-navy-700 mt-2 pt-3 flex gap-2">
+            <Link
+              to="/login"
+              onClick={() => setMobileOpen(false)}
+              className="flex-1 flex items-center justify-center gap-1.5 border border-navy-600 text-gray-300 hover:text-white hover:border-navy-400 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
+            >
+              <LogIn className="w-4 h-4" /> Login
+            </Link>
+            <Link
+              to="/register"
+              onClick={() => setMobileOpen(false)}
+              className="flex-1 flex items-center justify-center gap-1.5 bg-saffron-400 hover:bg-saffron-500 text-navy-800 font-semibold px-3 py-2.5 rounded-lg text-sm transition-colors"
+            >
+              <UserPlus className="w-4 h-4" /> Register
+            </Link>
+          </div>
         </div>
       )}
     </header>
